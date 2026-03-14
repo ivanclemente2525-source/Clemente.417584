@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Collections;
 
 namespace StudentRegistrationApplication
 {
@@ -20,15 +23,41 @@ namespace StudentRegistrationApplication
             DAYS.Items.Add("-Day-");
             Month.Items.Add("-Month-");
             Years.Items.Add("-Year-");
+            PROGRAMBox.Items.Add("-Select program-");
+
+            ArrayList programsList = new ArrayList();
+            programsList.Add("Bachelor of Science in Computer Science");
+            programsList.Add("Bachelor of Science in Information Technology");
+            programsList.Add("Bachelor of Science in Information Systems");
+            programsList.Add("Bachelor of Science in Computer Engineering");
+
+
+            ArrayList monthsList = new ArrayList();
+            monthsList.AddRange(new String[] {
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            });
+                
+
 
             for (int day = 1; day <= 31; day++)
             {
                 DAYS.Items.Add(day);
             }
 
-            for (int month = 1; month <= 12; month++)
+            foreach (string m in monthsList)
             {
-                Month.Items.Add(month);
+                Month.Items.Add(m);
             }
 
             int currentYear = DateTime.Now.Year;
@@ -37,6 +66,10 @@ namespace StudentRegistrationApplication
                 Years.Items.Add(year);
             }
 
+            foreach (string p in programsList)
+            {
+                PROGRAMBox.Items.Add(p);
+            }
             DAYS.SelectedIndex = 0;
             Month.SelectedIndex = 0;
             Years.SelectedIndex = 0;
@@ -95,7 +128,11 @@ namespace StudentRegistrationApplication
                     "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (PROGRAMBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Please select a program.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             string day = DAYS.SelectedItem.ToString();
             string month = Month.SelectedItem.ToString();
             string year = Years.SelectedItem.ToString();
@@ -115,16 +152,17 @@ namespace StudentRegistrationApplication
 
             string message = "Student name: " + fullName + "\n"
                            + "Gender: " + gender + "\n"
-                           + "Date of birth: " + dateOfBirth;
+                           + "Date of birth: " + dateOfBirth + "\n"
+                           + "Program: " + PROGRAMBox.SelectedItem.ToString();
+
 
             MessageBox.Show(message);
 
 
-        }
+       
 
-        private void Registerbutton_Click(object sender, EventArgs e)
-        {
-
+       
+            
         }
     }
 }
